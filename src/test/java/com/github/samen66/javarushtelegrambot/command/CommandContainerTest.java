@@ -1,6 +1,8 @@
 package com.github.samen66.javarushtelegrambot.command;
 
 import com.github.samen66.javarushtelegrambot.service.SendBotMessageService;
+import com.github.samen66.javarushtelegrambot.service.TelegramUserService;
+import com.github.samen66.javarushtelegrambot.service.TelegramUserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +19,8 @@ class CommandContainerTest {
     @BeforeEach
     public void init() {
         SendBotMessageService sendBotMessageService = Mockito.mock(SendBotMessageService.class);
-        commandContainer = new CommandContainer(sendBotMessageService);
+        TelegramUserService telegramUserService = Mockito.mock(TelegramUserServiceImpl.class);
+        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService);
     }
 
     @Test
