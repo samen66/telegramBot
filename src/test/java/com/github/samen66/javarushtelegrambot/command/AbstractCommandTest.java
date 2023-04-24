@@ -1,15 +1,19 @@
 package com.github.samen66.javarushtelegrambot.command;
 
 import com.github.samen66.javarushtelegrambot.bot.JavaRushTelegramBot;
+import com.github.samen66.javarushtelegrambot.entity.GroupSub;
 import com.github.samen66.javarushtelegrambot.service.SendBotMessageService;
 import com.github.samen66.javarushtelegrambot.service.SendBotMessageServiceImpl;
 import com.github.samen66.javarushtelegrambot.service.TelegramUserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import static com.github.samen66.javarushtelegrambot.command.CommandName.LIST_GROUP_SUB;
 
 /**
  * Abstract class for testing {@link Command}s.
@@ -45,5 +49,21 @@ public abstract class AbstractCommandTest {
 
         //then
         Mockito.verify(javarushBot).execute(sendMessage);
+    }
+
+    public static Update prepareUpdate(Long chatId, String text){
+        Message message = Mockito.mock(Message.class);
+        Update update = new Update();
+        Mockito.when(message.getChatId()).thenReturn(Long.parseLong(chatId.toString()));
+        Mockito.when(message.getText()).thenReturn(text);
+        Mockito.when(message.hasText()).thenReturn(true);
+        update.setMessage(message);
+        return update;
+    }
+    public static GroupSub creatGroupSub(int groupId, String groupTitle){
+        GroupSub groupSub = new GroupSub();
+        groupSub.setTitle(groupTitle);
+        groupSub.setId(groupId);
+        return groupSub;
     }
 }

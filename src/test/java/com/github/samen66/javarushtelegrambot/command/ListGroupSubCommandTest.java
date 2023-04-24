@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.github.samen66.javarushtelegrambot.command.AbstractCommandTest.creatGroupSub;
 import static com.github.samen66.javarushtelegrambot.command.CommandName.LIST_GROUP_SUB;
 import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Unit-level testing for ListGroupSubCommandTest")
@@ -54,12 +55,5 @@ class ListGroupSubCommandTest {
         //then
         Mockito.verify(sendBotMessageService).sendMessage(telegramUser.getChatId(), messageText + messageListUserGroupSub);
 
-    }
-
-    private GroupSub creatGroupSub(int groupId, String groupTitle){
-        GroupSub groupSub = new GroupSub();
-        groupSub.setTitle(groupTitle);
-        groupSub.setId(groupId);
-        return groupSub;
     }
 }
