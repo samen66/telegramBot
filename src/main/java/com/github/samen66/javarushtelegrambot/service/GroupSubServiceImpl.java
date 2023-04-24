@@ -2,22 +2,26 @@ package com.github.samen66.javarushtelegrambot.service;
 
 import com.github.samen66.javarushtelegrambot.entity.GroupSub;
 import com.github.samen66.javarushtelegrambot.entity.TelegramUser;
+import com.github.samen66.javarushtelegrambot.javarushclient.JavaRushGroupClient;
 import com.github.samen66.javarushtelegrambot.javarushclient.dto.GroupDiscussionInfo;
 import com.github.samen66.javarushtelegrambot.repository.GroupSubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class GroupSubServiceImpl implements GroupSubService{
     private final GroupSubRepository groupSubRepository;
     private final TelegramUserService telegramUserService;
+    private final JavaRushGroupClient javaRushGroupClient;
     @Autowired
-    public GroupSubServiceImpl(GroupSubRepository groupSubRepository, TelegramUserService telegramUserService) {
+    public GroupSubServiceImpl(GroupSubRepository groupSubRepository, TelegramUserService telegramUserService, JavaRushGroupClient javaRushGroupClient) {
         this.groupSubRepository = groupSubRepository;
         this.telegramUserService = telegramUserService;
+        this.javaRushGroupClient = javaRushGroupClient;
     }
 
     @Override
@@ -35,6 +39,8 @@ public class GroupSubServiceImpl implements GroupSubService{
         }else{
             groupSub = new GroupSub();
             groupSub.setId(groupDiscussionInfo.getId());
+//            groupSub.setLastPostId(javaRushGroupClient.findLastPostId(groupDiscussionInfo.getId()));
+            groupSub.setLastArticleId(javaRushGroupClient.findLastPostId(groupDiscussionInfo.getId()));
             groupSub.addUser(telegramUser);
             groupSub.setTitle(groupDiscussionInfo.getTitle());
         }
@@ -50,5 +56,10 @@ public class GroupSubServiceImpl implements GroupSubService{
     @Override
     public GroupSub save(GroupSub groupSub) {
         return groupSubRepository.save(groupSub);
+    }
+
+    @Override
+    public List<GroupSub> findAll() {
+        return groupSubRepository.findAll();
     }
 }

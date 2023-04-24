@@ -13,4 +13,5 @@ import javax.persistence.Table;
 @Repository
 public interface GroupSubRepository extends JpaRepository<GroupSub, Integer> {
 
+
 }
