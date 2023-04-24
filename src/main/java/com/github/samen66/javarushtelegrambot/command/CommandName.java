@@ -10,7 +10,9 @@ public enum CommandName {
     HELP("/help"),
     NO("/no"),
     STAT("/stat"),
-    ADD_GROUP_SUB("/addgroupsub");
+    ADD_GROUP_SUB("/addgroupsub"),
+    LIST_GROUP_SUB("/list_groupsub"),
+    DELETE_GROUP_SUB("/deletegroupsub");
 
     private final String commandName;
 
