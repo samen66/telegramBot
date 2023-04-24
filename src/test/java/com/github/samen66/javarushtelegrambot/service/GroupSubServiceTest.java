@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.github.samen66.javarushtelegrambot.entity.GroupSub;
 import com.github.samen66.javarushtelegrambot.entity.TelegramUser;
+import com.github.samen66.javarushtelegrambot.javarushclient.JavaRushGroupClient;
+import com.github.samen66.javarushtelegrambot.javarushclient.JavaRushGroupClientImpl;
 import com.github.samen66.javarushtelegrambot.javarushclient.dto.GroupDiscussionInfo;
 import com.github.samen66.javarushtelegrambot.repository.GroupSubRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +20,7 @@ public class GroupSubServiceTest {
 
     private GroupSubService groupSubService;
     private GroupSubRepository groupSubRepository;
+    private JavaRushGroupClient javaRushGroupClient;
     private TelegramUser newUser;
 
     private final static String CHAT_ID = "1";
@@ -26,7 +29,9 @@ public class GroupSubServiceTest {
     public void init() {
         TelegramUserService telegramUserService = Mockito.mock(TelegramUserService.class);
         groupSubRepository = Mockito.mock(GroupSubRepository.class);
-        groupSubService = new GroupSubServiceImpl(groupSubRepository, telegramUserService);
+        javaRushGroupClient = Mockito.mock(JavaRushGroupClient.class);
+
+        groupSubService = new GroupSubServiceImpl(groupSubRepository, telegramUserService, javaRushGroupClient);
 
         newUser = new TelegramUser();
         newUser.setActive(true);
