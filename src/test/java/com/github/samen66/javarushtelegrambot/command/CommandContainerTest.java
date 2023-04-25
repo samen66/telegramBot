@@ -25,8 +25,9 @@ class CommandContainerTest {
         TelegramUserService telegramUserService = Mockito.mock(TelegramUserServiceImpl.class);
         JavaRushGroupClient javaRushGroupClient = Mockito.mock(JavaRushGroupClientImpl.class);
         GroupSubService groupSubService = Mockito.mock(GroupSubServiceImpl.class);
+        StatisticsService statisticsService = Mockito.mock(StatisticsService.class);
 
-        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService, javaRushGroupClient, groupSubService, adminUSerNames);
+        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService, javaRushGroupClient, groupSubService, adminUSerNames, statisticsService);
     }
 
     @Test

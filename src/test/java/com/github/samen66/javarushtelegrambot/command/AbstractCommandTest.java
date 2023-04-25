@@ -4,6 +4,7 @@ import com.github.samen66.javarushtelegrambot.bot.JavaRushTelegramBot;
 import com.github.samen66.javarushtelegrambot.entity.GroupSub;
 import com.github.samen66.javarushtelegrambot.service.SendBotMessageService;
 import com.github.samen66.javarushtelegrambot.service.SendBotMessageServiceImpl;
+import com.github.samen66.javarushtelegrambot.service.StatisticsService;
 import com.github.samen66.javarushtelegrambot.service.TelegramUserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,6 +23,7 @@ public abstract class AbstractCommandTest {
     protected JavaRushTelegramBot javarushBot = Mockito.mock(JavaRushTelegramBot.class);
     protected SendBotMessageService sendBotMessageService = new SendBotMessageServiceImpl(javarushBot);
     protected TelegramUserService telegramUserService = Mockito.mock(TelegramUserService.class);
+    protected StatisticsService statisticsService = Mockito.mock(StatisticsService.class);
     abstract String getCommandName();
 
     abstract String getCommandMessage();
