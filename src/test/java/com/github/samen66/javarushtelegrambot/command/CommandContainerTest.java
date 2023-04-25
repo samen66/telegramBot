@@ -8,13 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Unit-level testing for CommandContainer")
 class CommandContainerTest {
     private CommandContainer commandContainer;
+    @Value("#{'${bot.admins}'.split(',')}")
+    private List<String> adminUSerNames;
 
     @BeforeEach
     public void init() {
@@ -22,7 +25,8 @@ class CommandContainerTest {
         TelegramUserService telegramUserService = Mockito.mock(TelegramUserServiceImpl.class);
         JavaRushGroupClient javaRushGroupClient = Mockito.mock(JavaRushGroupClientImpl.class);
         GroupSubService groupSubService = Mockito.mock(GroupSubServiceImpl.class);
-        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService, javaRushGroupClient, groupSubService);
+
+        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService, javaRushGroupClient, groupSubService, adminUSerNames);
     }
 
     @Test
@@ -30,7 +34,7 @@ class CommandContainerTest {
         //when-then
         Arrays.stream(CommandName.values())
                 .forEach(commandName -> {
-                    Command command = commandContainer.retrieveCommand(commandName.getCommandName());
+                    Command command = commandContainer.retrieveCommand(commandName.getCommandName(), "just");
                     Assertions.assertNotEquals(UnknownCommand.class, command.getClass());
                 });
     }
@@ -41,7 +45,7 @@ class CommandContainerTest {
         String unknownCommand = "/fgjhdfgdfg";
 
         //when
-        Command command = commandContainer.retrieveCommand(unknownCommand);
+        Command command = commandContainer.retrieveCommand(unknownCommand, "just");
 
         //then
         Assertions.assertEquals(UnknownCommand.class, command.getClass());
