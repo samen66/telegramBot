@@ -3,6 +3,7 @@ package com.github.samen66.javarushtelegrambot.command;
 import com.github.samen66.javarushtelegrambot.javarushclient.JavaRushGroupClient;
 import com.github.samen66.javarushtelegrambot.service.GroupSubService;
 import com.github.samen66.javarushtelegrambot.service.SendBotMessageService;
+import com.github.samen66.javarushtelegrambot.service.StatisticsService;
 import com.github.samen66.javarushtelegrambot.service.TelegramUserService;
 import com.google.common.collect.ImmutableMap;
 
@@ -21,7 +22,7 @@ public class CommandContainer {
     private  final List<String> adminUsernameList;
 
     public CommandContainer(SendBotMessageService sendBotMessageService, TelegramUserService telegramUserService,
-                            JavaRushGroupClient javaRushGroupClient, GroupSubService groupSubService, List<String> adminUsernameList) {
+                            JavaRushGroupClient javaRushGroupClient, GroupSubService groupSubService, List<String> adminUsernameList, StatisticsService statisticsService) {
         this.adminUsernameList = adminUsernameList;
 
         commandMap = ImmutableMap.<String, Command>builder()
@@ -29,7 +30,7 @@ public class CommandContainer {
                 .put(STOP.getCommandName(), new StopCommand(sendBotMessageService, telegramUserService  ))
                 .put(HELP.getCommandName(), new HelpCommand(sendBotMessageService))
                 .put(NO.getCommandName(), new NoCommand(sendBotMessageService))
-                .put(STAT.getCommandName(), new StatCommand(telegramUserService,    sendBotMessageService))
+                .put(STAT.getCommandName(), new StatCommand(statisticsService, sendBotMessageService))
                 .put(ADD_GROUP_SUB.getCommandName(), new AddGroupSubCommand(sendBotMessageService, javaRushGroupClient, groupSubService))
                 .put(LIST_GROUP_SUB.getCommandName(), new ListGroupSubCommand(telegramUserService, sendBotMessageService))
                 .put(DELETE_GROUP_SUB.getCommandName(), new DeleteGroupSubCommand(sendBotMessageService, groupSubService, telegramUserService))
